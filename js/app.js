@@ -52,7 +52,7 @@ angular.module('taskmanager', ['ionic'])
   }
 })
 
-.controller('Taskctrl', function($scope, $ionicModal, Categories, $ionicSideMenuDelegate){
+.controller('Taskctrl', function($scope, $timeout, $ionicModal, Categories, $ionicSideMenuDelegate){
   var createCategory = function(categoryTitle){
     var newCategory = Categories.newCategory(categoryTitle);
     $scope.categories.push(newCategory);
@@ -86,10 +86,16 @@ angular.module('taskmanager', ['ionic'])
   });
 
   $scope.createTask = function(task){
-    $scope.tasks.push({
+    if(!$scope.activeCategory || !task){
+      return;
+    }
+    $scope.activeCategory.tasks.push({
       title: task.title
     });
     $scope.taskModal.hide();
+
+    //Save task
+    Categories.save($scope.categories);
     task.title="";
   }
 
@@ -104,5 +110,17 @@ angular.module('taskmanager', ['ionic'])
   $scope.toggleCategories = function(){
     $ionicSideMenuDelegate.toggleLeft();
   }
+
+  $timeout(function(){
+    if($scope.categories.length==0){
+      while(true){
+        var categoryTitle = prompt("Please create a category:");
+        if(categoryTitle){
+          createCategory(categoryTitle);
+          break;
+        }
+      }
+    }
+  });
 });
 
