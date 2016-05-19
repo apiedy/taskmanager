@@ -27,13 +27,14 @@
             <!-- Main content -->
             <ion-side-menu-content>
                 <ion-header-bar class="bar bar-header bar-positive">
+                    <button class="button button-icon" ng-click="toggleCategories()"><i class="icon ion-navicon"></i></button>
                     <h1 class="title">TaskManager</h1>
                     <button class="button button-icon" ng-click="newTask()"><i class="icon ion-compose"></i></button>
                 </ion-header-bar>
 
                 <ion-content>
                     <ion-list>
-                        <ion-item ng-repeat="task in tasks">
+                        <ion-item ng-repeat="task in activeCategory.tasks">
                             {{task.title}}
                         </ion-item>
                     </ion-list>
@@ -57,7 +58,7 @@
                         <form ng-submit="createTask(task)">
                             <div class="list">
                             <label class="item item-input">
-                                <input type="text" placeholder="What do you need to do?" ng-modal="task.title">
+                                <input type="text" placeholder="What do you need to do?" ng-model="task.title">
                             </label>
                             </div>
                             <div class="padding">
@@ -67,6 +68,7 @@
                     </ion-content>
                 </div>
             </script>
+
         </ion-side-menus>
 
     </body>
