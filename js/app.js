@@ -99,6 +99,17 @@ angular.module('taskmanager', ['ionic'])
     task.title="";
   }
 
+  $scope.removeTask= function(task){
+    console.log(22);
+    for(i=0;i<$scope.activeCategory.tasks.length;i++)
+    {
+      if($scope.activeCategory.tasks[i].title == task.title){
+        $scope.activeCategory.tasks.splice(i,1);
+        Categories.save($scope.categories);
+      }
+    }
+  }
+
   $scope.newTask = function(){
     $scope.taskModal.show();
   }
